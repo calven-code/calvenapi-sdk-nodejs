@@ -2,7 +2,7 @@ publish:
   image: calvenapi
   stage: publish
   script:
-    - echo _auth=$NPM_PUBLSH_KEY >> .npmrc
+    - echo _auth=$_NPM_PUBLISH_KEY >> .npmrc
     - echo email=<youremail> >> .npmrc
     - echo always-auth=true >> .npmrc
     - npm version --no-git-tag-version $(npm view @calven-code/calvenapi@latest version)
