@@ -16,6 +16,7 @@ import {
   CalvenOccupancyEvent,
   CalvenOccupancyRequest,
   CalvenOccupancyResponse,
+  CalvenClientConfig,
 } from '../types'
 import { BaseAuthenticatedClient } from './baseAuthenticatedClient'
 import { CALVEN_API_BASE } from '../types'
@@ -37,7 +38,7 @@ export class OccupancyClient extends BaseAuthenticatedClient<
    * Constructor
    * @param apiKey The API key to use when authenticating with Calven.
    * @param secret The secret to use when authenticating with Calven.
-   * @param baseUrl The base URL to use when sending requests to Calven.  This defaults to `CALVEN_API_BASE`.
+   * @param config The config for the Calven client.
    * @param correlationId The correlation ID to use when sending requests to Calven.  This is optional.
    * @returns A new `OccupancyClient` instance.
    */
@@ -45,10 +46,10 @@ export class OccupancyClient extends BaseAuthenticatedClient<
   constructor(
     apiKey: string,
     secret: string,
-    baseUrl: string = CALVEN_API_BASE,
+    config: CalvenClientConfig,
     correlationId?: string
   ) {
-    super(apiKey, secret, baseUrl, OccupancyClient.path, correlationId)
+    super(apiKey, secret, config, OccupancyClient.path, correlationId)
   }
 
   /**

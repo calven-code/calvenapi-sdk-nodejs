@@ -14,6 +14,7 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 import { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import {
   CALVEN_API_BASE,
+  CalvenClientConfig,
   CalvenPresenceEvent,
   CalvenPresenceRequest,
   CalvenPresenceResponse,
@@ -36,7 +37,7 @@ export class PresenceClient extends BaseAuthenticatedClient<
    * Constructor
    * @param apiKey The API key to use when authenticating with Calven.
    * @param secret The secret to use when authenticating with Calven.
-   * @param baseUrl The base URL to use when sending requests to Calven.  This defaults to `CALVEN_API_BASE`.
+   * @param config The config for the Calven client.
    * @param correlationId The correlation ID to use when sending requests to Calven.  This is optional.
    * @returns A new `PresenceClient` instance.
    */
@@ -44,10 +45,10 @@ export class PresenceClient extends BaseAuthenticatedClient<
   constructor(
     apiKey: string,
     secret: string,
-    baseUrl: string = CALVEN_API_BASE,
+    config: CalvenClientConfig,
     correlationId?: string
   ) {
-    super(apiKey, secret, baseUrl, PresenceClient.path, correlationId)
+    super(apiKey, secret, config, PresenceClient.path, correlationId)
   }
 
   /**

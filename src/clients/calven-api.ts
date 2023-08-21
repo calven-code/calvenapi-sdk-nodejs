@@ -12,7 +12,7 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 */
 
 import { OccupancyClient, PresenceClient, TimeoffClient } from '.'
-import { CALVEN_API_BASE } from '../types'
+import { DEFAULT_CALVEN_CLIENT_CONFIG, CalvenClientConfig } from '../types'
 
 /**
  * Calven client factory
@@ -23,7 +23,7 @@ export class CalvenAPI {
    * Create a new `OccupancyClient` instance.
    * @param apiKey The API key to use when authenticating with Calven.
    * @param secret The secret to use when authenticating with Calven.
-   * @param baseUrl The base URL to use when sending requests to Calven.  This defaults to `CALVEN_API_BASE`.
+   * @param config The Calven API client configuration.
    * @param correlationId The correlation ID to use when sending requests to Calven.  This is optional.
    * @returns A new `OccupancyClient` instance.
    */
@@ -31,17 +31,17 @@ export class CalvenAPI {
   static occupancyClient(
     apiKey: string,
     secret: string,
-    baseUrl: string = CALVEN_API_BASE,
+    config: CalvenClientConfig = DEFAULT_CALVEN_CLIENT_CONFIG,
     correlationId?: string
   ): OccupancyClient {
-    return new OccupancyClient(apiKey, secret, baseUrl, correlationId)
+    return new OccupancyClient(apiKey, secret, config, correlationId)
   }
 
   /**
    * Create a new `PresenceClient` instance
    * @param apiKey The API key to use when authenticating with Calven.
    * @param secret The secret to use when authenticating with Calven.
-   * @param baseUrl The base URL to use when sending requests to Calven.  This defaults to `CALVEN_API_BASE`.
+   * @param config The Calven API client configuration.
    * @param correlationId The correlation ID to use when sending requests to Calven.  This is optional.
    * @returns A bw `PresenceClient` instance.
    */
@@ -49,17 +49,17 @@ export class CalvenAPI {
   static presenceClient(
     apiKey: string,
     secret: string,
-    baseUrl: string = CALVEN_API_BASE,
+    config: CalvenClientConfig = DEFAULT_CALVEN_CLIENT_CONFIG,
     correlationId?: string
   ): PresenceClient {
-    return new PresenceClient(apiKey, secret, baseUrl, correlationId)
+    return new PresenceClient(apiKey, secret, config, correlationId)
   }
 
   /**
    * Create a new `TimeoffClient` instance
    * @param apiKey The API key to use when authenticating with Calven.
    * @param secret The secret to use when authenticating with Calven.
-   * @param baseUrl The base URL to use when sending requests to Calven.  This defaults to `CALVEN_API_BASE`.
+   * @param config The Calven API client configuration.
    * @param correlationId The correlation ID to use when sending requests to Calven.  This is optional.
    * @returns A new `TimeoffClient` instance.
    */
@@ -67,9 +67,9 @@ export class CalvenAPI {
   static timeoffClient(
     apiKey: string,
     secret: string,
-    baseUrl: string = CALVEN_API_BASE,
+    config: CalvenClientConfig = DEFAULT_CALVEN_CLIENT_CONFIG,
     correlationId?: string
   ): TimeoffClient {
-    return new TimeoffClient(apiKey, secret, baseUrl, correlationId)
+    return new TimeoffClient(apiKey, secret, config, correlationId)
   }
 }

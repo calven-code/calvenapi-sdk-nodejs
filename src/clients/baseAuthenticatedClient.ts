@@ -15,6 +15,7 @@ import { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import { BaseClient } from './baseClient'
 import {
   CalvenApiTokenResponse,
+  CalvenClientConfig,
   CalvenTimeOffRequest,
   CalvenTimeOffResponse,
 } from '../types'
@@ -28,11 +29,11 @@ export class BaseAuthenticatedClient<T, R> extends BaseClient<T, R> {
   constructor(
     private readonly apiKey: string,
     private readonly secret: string,
-    baseUrl: string,
+    config: CalvenClientConfig,
     path: string,
     correlationId?: string
   ) {
-    super(baseUrl, path, correlationId)
+    super(config, path, correlationId)
     this.axios.interceptors.request.use(async (c) => this.intercept(c))
   }
 
@@ -43,7 +44,7 @@ export class BaseAuthenticatedClient<T, R> extends BaseClient<T, R> {
       const authClient = new AuthClient(
         this.apiKey,
         this.secret,
-        this.baseUrl,
+        this.config,
         this.correlationId
       )
 

@@ -13,7 +13,11 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 import { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import { BaseClient } from './baseClient'
-import { CalvenApiTokenRequest, CalvenApiTokenResponse } from '../types'
+import {
+  CalvenApiTokenRequest,
+  CalvenApiTokenResponse,
+  CalvenClientConfig,
+} from '../types'
 import * as crypto from 'crypto'
 
 export class AuthClient extends BaseClient<
@@ -29,10 +33,10 @@ export class AuthClient extends BaseClient<
   constructor(
     private readonly apiKey: string,
     private readonly secret: string,
-    baseUrl: string,
+    config: CalvenClientConfig,
     correlationId?: string
   ) {
-    super(baseUrl, AuthClient.path, correlationId)
+    super(config, AuthClient.path, correlationId)
   }
 
   async getToken(): Promise<CalvenApiTokenResponse> {

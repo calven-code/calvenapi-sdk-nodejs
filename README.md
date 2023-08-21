@@ -19,8 +19,6 @@ The library exposes the `CalvenAPI` class, which provides static factory methods
 
 Each method accepts an API Key and an API key secret.  You can optionally provide the base URL for the Calven API.  If you do not provide a base URL, the client will use the default Calven API URL.
 
-
-
 ### Occupancy client
 
 ```typescript
@@ -82,3 +80,19 @@ const timeOffEvent: CalvenTimeOffEvent = {
 
 const timeOffResult = await timeoffClient.sendTimeoff([timeOffEvent])
 ```
+
+## Endpoint and region selection
+
+The Calven API is available in multiple regions.  You can specify the region to use by passing an optional `CalvenClientConfig` when
+creating a client.  If you do not specify a region, the client will use the default region, which is the US.
+
+For example, to select the Austrialian region:
+
+```typescript
+import { CalvenAPIRegion, CalvenClient, CalvenLocationType, CalvenPresenceEvent, } from '@calven-code/client'
+
+const presenceClient = CalvenClient.presenceClient(apiKey,apiSecret, { region: CalvenAPIRegion.AU})
+```
+
+You can also pass a `baseUrl` in the `CalvenClientConfig` to specify a custom Calven API URL.  The default value
+is the production Calven endpoint.
