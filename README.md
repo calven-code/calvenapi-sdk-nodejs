@@ -5,7 +5,7 @@ This library provides clients for the Calven API.
 ## Installation
 
 ```bash
-npm install @calven-code/calvenapi-nodejs
+npm install @calven-code/calvenapi
 ```
 
 ## Usage
