@@ -53,9 +53,7 @@ const presenceEvent: CalvenPresenceEvent = {
   sourceUserId:'1234',
   userEmail:'Mary.Jones@example.com',
   locationId: 'DF253A05-573C-4A9F-BFF8-64795029572D',
-  locationType: CalvenLocationType.LOCATION,
-  eventType: CalvenTimeOffEventType.SCHEDULED,
-  timeOffType: CalvenTimeOffType.LEAVE
+  locationType: CalvenLocationType.LOCATION
 }
 
 const presenceResult = await presenceClient.sendPresence('my-source-id',[presenceEvent])
