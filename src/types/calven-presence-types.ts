@@ -23,7 +23,7 @@ export interface CalvenPresenceEvent {
   timestamp: Date
   locationId: String
   locationType: CalvenLocationType
-  sourceUserId: string
+  sourceUserId?: string
   userId?: string
   userEmail?: string
 }
