@@ -38,6 +38,25 @@ export enum CalvenTimeOffType {
   SICK = 'sick',
 }
 
+const timeoffEventTypeMap = new Map<string, CalvenTimeOffEventType>(
+  Object.values(CalvenTimeOffEventType).map((v) => [v, v])
+)
+
+export function calvenTimeOffEventTypeFromString(
+  value: string
+): CalvenTimeOffEventType | undefined {
+  return timeoffEventTypeMap.get(value)
+}
+
+const timeoffTypeMap = new Map<string, CalvenTimeOffType>(
+  Object.values(CalvenTimeOffType).map((v) => [v, v])
+)
+
+export function calvenTimeOffTypeFromString(
+  value: string
+): CalvenTimeOffType | undefined {
+  return timeoffTypeMap.get(value)
+}
 export interface CalvenTimeOffResponse {
   timestamp: Date
   results: CalvenEventResult[]

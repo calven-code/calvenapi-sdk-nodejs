@@ -25,6 +25,16 @@ export enum CalvenLocationType {
   ZONE = 'zone',
 }
 
+const locationTypeMap = new Map<string, CalvenLocationType>(
+  Object.values(CalvenLocationType).map((v) => [v, v])
+)
+
+export function calvenLocationTypeFromString(
+  value: string
+): CalvenLocationType | undefined {
+  return locationTypeMap.get(value)
+}
+
 export interface CalvenEventResult {
   eventId: string
   resultCode: CalvenResultCode
