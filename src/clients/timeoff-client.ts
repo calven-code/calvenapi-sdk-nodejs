@@ -66,29 +66,35 @@ export class TimeoffClient extends BaseAuthenticatedClient<
     }
 
     return this.post(request, {
+      headers: {
+        'Content-Type': 'application/json',
+      },
       transformRequest: [this.transformRequest],
     })
   }
 
   private transformRequest = (data: CalvenTimeOffRequest) => {
+    const timeOffEvents = data.timeOffEvents.map((event) => {
+      return {
+        eventId: event.eventId,
+        email: event.email,
+        uid: event.uid,
+        eventType: event.eventType,
+        startDate: this.formatDate(event.startDate),
+        endDate: this.formatDate(event.endDate),
+        timeOffType: event.timeOffType,
+      }
+    })
     const request = {
-      timeOffEvents: data.timeOffEvents.map((event) => {
-        return {
-          eventId: event.eventId,
-          email: event.email,
-          uid: event.uid,
-          eventType: event.eventType,
-          startDate: this.formatDate(event.startDate),
-          endDate: this.formatDate(event.endDate),
-          timeOffType: event.timeOffType,
-        }
-      }),
+      timeOffEvents,
     }
 
     return JSON.stringify(request)
   }
 
   private formatDate(date: Date): string {
-    return `${date.getFullYear()}-${date.getMonth() + 1}-${date.getDate()}`
+    return `${date.getFullYear()}-${(date.getMonth() + 1)
+      .toString()
+      .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
   }
 }
