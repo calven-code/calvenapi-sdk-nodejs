@@ -49,7 +49,7 @@ export class AuthClient extends BaseClient<
       hash,
     }
 
-    return this.post(request)
+    return await this.post(request)
   }
 
   private generateHash(
