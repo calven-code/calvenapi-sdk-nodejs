@@ -35,26 +35,36 @@ export class BaseAuthenticatedClient<T, R> extends BaseClient<T, R> {
   ) {
     super(config, path, correlationId)
     this.axios.interceptors.request.use(
-      (c) => this.intercept(c),
+      (c) => this.refreshToken(c),
       (error) => {
         return Promise.reject(error)
-      }
+      },
+      { runWhen: (c) => this.checkToken(c) }
     )
   }
 
-  async intercept(
+  checkToken(config: InternalAxiosRequestConfig): boolean {
+    return !this.token || this.token.expiration < Date.now()
+  }
+
+  async refreshToken(
     config: InternalAxiosRequestConfig
   ): Promise<InternalAxiosRequestConfig> {
-    if (!this.token || this.token.expiration < Date.now()) {
-      const authClient = new AuthClient(
-        this.apiKey,
-        this.secret,
-        this.config,
-        this.correlationId
-      )
+    const authClient = new AuthClient(
+      this.apiKey,
+      this.secret,
+      this.config,
+      this.correlationId
+    )
 
-      this.token = await authClient.getToken()
-    }
+    this.token = await authClient.getToken()
+
+    return config
+  }
+
+  async addHeaders(
+    config: InternalAxiosRequestConfig
+  ): Promise<InternalAxiosRequestConfig> {
     if (this.correlationId) {
       config.headers.correlationId = this.correlationId
     }
@@ -64,7 +74,7 @@ export class BaseAuthenticatedClient<T, R> extends BaseClient<T, R> {
       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
       // @ts-expect-error
       headers: {
-        Authorization: `Bearer ${this.token.token}`,
+        Authorization: `Bearer ${this.token!.token}`,
         'content-type': 'application/json',
         ...config.headers,
       },
