@@ -49,7 +49,8 @@ export class AuthClient extends BaseClient<
       hash,
     }
 
-    return await this.post(request)
+    const result = await this.post(request)
+    return result
   }
 
   private generateHash(
