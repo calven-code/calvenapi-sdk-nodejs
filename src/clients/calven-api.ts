@@ -11,7 +11,12 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 
 */
 
-import { OccupancyClient, PresenceClient, TimeoffClient } from '.'
+import {
+  AccessCredentialClient,
+  OccupancyClient,
+  PresenceClient,
+  TimeoffClient,
+} from '.'
 import { DEFAULT_CALVEN_CLIENT_CONFIG, CalvenClientConfig } from '../types'
 
 /**
@@ -19,6 +24,24 @@ import { DEFAULT_CALVEN_CLIENT_CONFIG, CalvenClientConfig } from '../types'
  */
 
 export class CalvenAPI {
+  /**
+   * Create a new `AccessCredentialClient` instance.
+   * @param apiKey The API key to use when authenticating with Calven.
+   * @param secret The secret to use when authenticating with Calven.
+   * @param config The Calven API client configuration.
+   * @param correlationId The correlation ID to use when sending requests to Calven.  This is optional.
+   * @returns A new `OccupancyClient` instance.
+   */
+
+  static accessCredentialClient(
+    apiKey: string,
+    secret: string,
+    config: CalvenClientConfig = DEFAULT_CALVEN_CLIENT_CONFIG,
+    correlationId?: string
+  ): AccessCredentialClient {
+    return new AccessCredentialClient(apiKey, secret, config, correlationId)
+  }
+
   /**
    * Create a new `OccupancyClient` instance.
    * @param apiKey The API key to use when authenticating with Calven.
