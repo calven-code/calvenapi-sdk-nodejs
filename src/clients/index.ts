@@ -14,4 +14,5 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 export * from './occupancy-client'
 export * from './presence-client'
 export * from './timeoff-client'
+export * from './access-credential-client'
 export * from './calven-api'

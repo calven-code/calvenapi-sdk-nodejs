@@ -34,7 +34,7 @@ export class BaseAuthenticatedClient<T, R> extends BaseClient<T, R> {
     correlationId?: string
   ) {
     super(config, path, correlationId)
-    this.axios.interceptors.request.use(async (c) => this.intercept(c))
+    this.axios.interceptors.request.use((c) => this.intercept(c))
   }
 
   async intercept(
