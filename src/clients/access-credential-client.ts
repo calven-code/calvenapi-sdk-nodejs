@@ -14,24 +14,24 @@ WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 import { AxiosInstance, InternalAxiosRequestConfig } from 'axios'
 import {
   CALVEN_API_BASE,
+  CalvenAccessCredentialData,
+  CalvenAccessCredentialRequest,
+  CalvenAccessCredentialResponse,
   CalvenClientConfig,
-  CalvenTimeOffEvent,
-  CalvenTimeOffRequest,
-  CalvenTimeOffResponse,
 } from '../types'
 import { BaseAuthenticatedClient } from './baseAuthenticatedClient'
 
-/** TimeoffClient
- *  This client is used to send time off events to Calven.
+/** AccessCredentialClient
+ *  This client is used to send access credentials to Calven.
  */
 
-export class TimeoffClient extends BaseAuthenticatedClient<
-  CalvenTimeOffRequest,
-  CalvenTimeOffResponse
+export class AccessCredentialClient extends BaseAuthenticatedClient<
+  CalvenAccessCredentialRequest,
+  CalvenAccessCredentialResponse
 > {
   axios: AxiosInstance
 
-  private static path = 'v1/timeoff'
+  private static path = 'v1/access-credentials'
 
   /**
    * Constructor
@@ -39,7 +39,7 @@ export class TimeoffClient extends BaseAuthenticatedClient<
    * @param secret The secret to use when authenticating with Calven.
    * @param config The config for the Calven client.
    * @param correlationId The correlation ID to use when sending requests to Calven.  This is optional.
-   * @returns A new `TimeoffClient` instance.
+   * @returns A new `AccessCredentialClient` instance.
    */
 
   constructor(
@@ -48,7 +48,7 @@ export class TimeoffClient extends BaseAuthenticatedClient<
     config: CalvenClientConfig,
     correlationId?: string
   ) {
-    super(apiKey, secret, config, TimeoffClient.path, correlationId)
+    super(apiKey, secret, config, AccessCredentialClient.path, correlationId)
   }
 
   /**
@@ -58,39 +58,17 @@ export class TimeoffClient extends BaseAuthenticatedClient<
    * @returns A `CalvenTimeOffResponse` instance.
    */
 
-  async sendTimeOff(
-    timeOffEvents: CalvenTimeOffEvent[]
-  ): Promise<CalvenTimeOffResponse> {
-    const request: CalvenTimeOffRequest = {
-      timeOffEvents,
+  async sendAccessCredentials(
+    data: CalvenAccessCredentialData[]
+  ): Promise<CalvenAccessCredentialResponse> {
+    const request: CalvenAccessCredentialRequest = {
+      data,
     }
 
     return this.post(request, {
       headers: {
         'Content-Type': 'application/json',
       },
-      transformRequest: [this.transformRequest],
     })
-  }
-
-  private transformRequest = (data: CalvenTimeOffRequest) => {
-    const timeOffEvents = data.timeOffEvents.map((event) => {
-      return {
-        ...event,
-        startDate: this.formatDate(event.startDate),
-        endDate: this.formatDate(event.endDate),
-      }
-    })
-    const request = {
-      timeOffEvents,
-    }
-
-    return JSON.stringify(request)
-  }
-
-  private formatDate(date: Date): string {
-    return `${date.getFullYear()}-${(date.getMonth() + 1)
-      .toString()
-      .padStart(2, '0')}-${date.getDate().toString().padStart(2, '0')}`
   }
 }
